@@ -27,11 +27,11 @@ library(shiny)
 ui <- fluidPage(
   textInput("group_id", "The key for your group", "", width = "500px", placeholder = NULL),
   actionButton("confirm_group", "Join or create group"),
-  textInput("caption", "Words", "", width = "700px"),
-  actionButton("confirmed", "Add a new word (initial phase)"),
+  textInput("caption", "", "", width = "700px"),
+  actionButton("confirmed", "Add a new word to the bin (initial phase)"),
   actionButton("ready", "I am ready to play the game"),
   actionButton("read_word", "Pick a word from the bin"),
-  actionButton("solved", "I solved the word a word"),
+  actionButton("solved", "I solved that word"),
   actionButton("next_round", "Put all items back in the bin"),
   actionButton("clear_bin", "Clear the bin"),
 
@@ -88,7 +88,7 @@ server <- function(input, output) {
     saveRDS(data, path_storage(input$group_id))
     v$words_left <- sum(as.integer(data$is_available))
     new_word <- word_read(input$group_id)
-    v$msg <- paste0("Well Done. new word: ", new_word)
+    v$msg <- paste0("Well Done. New word: ", new_word)
   })
 
   observeEvent(input$clear_bin, {
